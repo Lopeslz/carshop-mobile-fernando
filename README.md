@@ -21,8 +21,10 @@ Ele consome uma API REST feita em Java Spring Boot e utiliza um banco de dados *
 
 Importante: o banco já deve estar criado antes de rodar a aplicação:
 
-🚀 Como rodar a aplicação
-1️⃣ Rodar a API (Backend)
+
+
+## Como rodar a aplicação
+1️⃣Rodar a API (Backend)
 Clone o repositório da API (exemplo):
 
 bash
