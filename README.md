@@ -27,10 +27,7 @@ Importante: o banco já deve estar criado antes de rodar a aplicação:
 1️⃣Rodar a API (Backend)
 Clone o repositório da API (exemplo):
 
-bash
-Copiar
-Editar
-git clone https://github.com/SEU_REPO_API.git
+git clone https://github.com/Lopeslz/carshop-mobile-fernando.git
 Abra o projeto no IntelliJ IDEA
 
 Configure o application.properties com as credenciais corretas do seu MySQL:
@@ -47,7 +44,7 @@ http://localhost:8080/api
 2️⃣ Rodar o App Flutter (Mobile)
 Clone este repositório:
 
-git clone https://github.com/Lopeslz/carshop-mobile-fernando.git
+git clone https://github.com/Lopeslz/carshop-mobile-rafael.git
 
 Abra o projeto no Android Studio ou VSCode.
 
