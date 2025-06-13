@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.util.List;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -92,6 +93,49 @@ public class UserController {
 
         return ResponseEntity.ok(dto);
     }
+
+    @GetMapping("/admins")
+    public List<User> getAdmins() {
+        return userRepo.findByIsAdminTrue();
+    }
+
+    @PostMapping
+    public User createUser(@RequestBody User user) {
+        return userRepo.save(user);
+    }
+
+
+    //JAVAFXXXXXXXXXXXXXX
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userRepo.findById(id).orElse(null);
+        if (user != null) {
+            return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+        Optional<User> optionalUser = userRepo.findById(id);
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = optionalUser.get();
+        user.setName(updatedUser.getName());
+        user.setEmail(updatedUser.getEmail());
+        user.setPassword(updatedUser.getPassword());
+        user.setIsAdmin(updatedUser.getIsAdmin());
+
+        userRepo.save(user);
+        return ResponseEntity.ok(user);
+    }
+
+    //qlogica do login
+
+
 
 
 

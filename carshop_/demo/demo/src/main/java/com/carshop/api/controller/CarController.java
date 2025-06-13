@@ -155,6 +155,59 @@ public class CarController {
         return ResponseEntity.ok(carRepo.save(car));
     }
 
+    //MUDANÇAS JAVAFX
+
+    // Endpoint POST que aceita JSON (para uso do JavaFX)
+    @PostMapping(value = "/json", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Car> createCarJson(@RequestBody Car car) {
+        try {
+            // Car.seller (no JSON do painel) vai vir com o campo sellerId
+            User seller = userRepo.findById(car.getSeller().getId()).orElse(null);
+            if (seller == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+
+            car.setSeller(seller);
+            car.setCreatedAt(LocalDateTime.now());
+
+            Car saved = carRepo.save(car);
+            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping(value = "/json/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Car> updateCarJson(@PathVariable Long id, @RequestBody Car updatedCar) {
+        Optional<Car> optionalCar = carRepo.findById(id);
+        if (optionalCar.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Car car = optionalCar.get();
+
+        car.setTitle(updatedCar.getTitle());
+        car.setPrice(updatedCar.getPrice());
+        car.setYear(updatedCar.getYear());
+        car.setMileage(updatedCar.getMileage());
+        car.setVariant(updatedCar.getVariant());
+        car.setMeetingLat(updatedCar.getMeetingLat());
+        car.setMeetingLng(updatedCar.getMeetingLng());
+
+        User seller = userRepo.findById(updatedCar.getSeller().getId()).orElse(null);
+        if (seller == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        car.setSeller(seller);
+
+        return ResponseEntity.ok(carRepo.save(car));
+    }
+
+
+
+
 
 
 }

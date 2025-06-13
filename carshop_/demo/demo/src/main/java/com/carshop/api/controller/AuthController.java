@@ -38,10 +38,13 @@ public class AuthController {
         if (user != null && user.getPassword().equals(password)) {
             Map<String, Object> response = new HashMap<>();
             response.put("userId", user.getId());
+            response.put("isAdmin", user.getIsAdmin()); // ADICIONE ISSO!
+            response.put("name", user.getName()); // (opcional - ajuda no log "Login bem-sucedido para: nome")
             return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(Map.of("message", "Credenciais inválidas"));
     }
+
 }
